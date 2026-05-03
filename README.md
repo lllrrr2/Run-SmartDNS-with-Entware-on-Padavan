@@ -291,6 +291,7 @@ fi
 5. 将Padavan-系统管理-服务-调度任务 (Crontab)文本框里，填入0 3 * * * source "/etc/storage/post_wan_script.sh" updateadrule 并应用设置。  
 ```sh
 0 3 * * * source "/etc/storage/post_wan_script.sh" updateadrule
+*/3 * * * * /bin/sh -c 'ping -c 3 -W 2 223.5.5.5 >/dev/null 2>&1 || { sleep 30; ping -c 3 -W 2 223.5.5.5 >/dev/null 2>&1 || { killall -9 pppd; sleep 3; restart_wan; }; }'
 ```
 
 6. 保存设置（Padavan-系统管理-配置管理-保存内部存储到闪存:提交）。
