@@ -7,3 +7,5 @@
 0 3 * * * source "/etc/storage/post_wan_script.sh" updateadrule
 # pppoe拨号偶发断网问题缓解措施:每3分钟检测一次网络通联情况,网络不通时复检一次,最终确认网络不通时进行强制重连
 */3 * * * * /bin/sh -c 'ping -c 3 -W 2 223.5.5.5 >/dev/null 2>&1 || { sleep 30; ping -c 3 -W 2 223.5.5.5 >/dev/null 2>&1 || { killall -9 pppd; sleep 3; restart_wan; }; }'
+# 尝试缓解偶发内存泄漏的问题:特别是路由器长时间不重启dnsmasq占用内存越来越大
+0 5 * * 1 restart_dhcpd
